@@ -6,9 +6,11 @@ import {
   Command,
   LoaderCircle,
   MessageCircle,
+  Moon,
   RotateCcw,
   Send,
   Sparkles,
+  Sun,
   WandSparkles,
   Zap,
 } from 'lucide-react'
@@ -22,12 +24,17 @@ const suggestions = [
 ]
 
 export default function App() {
+  const [theme, setTheme] = useState(() => window.localStorage.getItem('sakhi-theme') || 'dark')
   const [question, setQuestion] = useState('')
   const [conversation, setConversation] = useState([])
   const [pendingQuestion, setPendingQuestion] = useState('')
   const [isLoading, setIsLoading] = useState(false)
   const [error, setError] = useState('')
   const conversationEndRef = useRef(null)
+
+  useEffect(() => {
+    window.localStorage.setItem('sakhi-theme', theme)
+  }, [theme])
 
   useEffect(() => {
     conversationEndRef.current?.scrollIntoView({ behavior: 'smooth', block: 'end' })
@@ -71,17 +78,29 @@ export default function App() {
   }
 
   return (
-    <main className="app-shell">
+    <main className="app-shell relative isolate mx-auto min-h-screen w-full max-w-[1440px] overflow-hidden" data-theme={theme}>
       <div className="ambient ambient-one" />
       <div className="ambient ambient-two" />
 
-      <nav className="topbar">
+      <nav className="topbar flex min-h-[88px] items-center justify-between">
         <a className="brand" href="#" aria-label="SAKHI home">
           <span className="brand-mark"><Sparkles size={17} /></span>
           <span>SAKHI</span>
         </a>
         <div className="topbar-note"><span className="live-dot" /> Your little spark of genius</div>
-        <div className="topbar-shortcut"><Command size={13} /> <span>AI powered</span></div>
+        <div className="topbar-actions flex items-center gap-2">
+          <div className="topbar-shortcut"><Command size={13} /> <span>AI powered</span></div>
+          <button
+            className="theme-toggle inline-flex min-h-[34px] items-center gap-[7px] px-[11px] text-[11px]"
+            type="button"
+            onClick={() => setTheme((current) => current === 'dark' ? 'light' : 'dark')}
+            aria-label={`Switch to ${theme === 'dark' ? 'light' : 'dark'} mode`}
+            title={`Switch to ${theme === 'dark' ? 'light' : 'dark'} mode`}
+          >
+            {theme === 'dark' ? <Sun size={15} /> : <Moon size={15} />}
+            <span>{theme === 'dark' ? 'Light' : 'Dark'}</span>
+          </button>
+        </div>
       </nav>
 
       <section className="hero">
@@ -116,7 +135,7 @@ export default function App() {
       </section>
 
       <section className="workspace" aria-label="Ask SAKHI">
-        <div className="workspace-heading">
+        <div className="workspace-heading mb-[18px] flex items-end justify-between">
           <div>
             <div className="section-kicker">LET&apos;S MAKE SOMETHING CLICK</div>
             <h2>What&apos;s on your mind?</h2>
@@ -182,7 +201,7 @@ export default function App() {
             placeholder="Ask anything... the weirder, the better."
             rows={2}
           />
-          <div className="prompt-footer">
+          <div className="prompt-footer flex items-center justify-between gap-3 pt-2">
             <span className="input-hint"><span>↵</span> to send <span className="hint-divider">·</span> shift + ↵ for a new line</span>
             <button className="send-button" type="submit" disabled={isLoading || !question.trim()}>
               {isLoading ? <LoaderCircle className="spin" size={17} /> : <Send size={16} />}

@@ -24,7 +24,7 @@ const suggestions = [
 ]
 
 export default function App() {
-  const [theme, setTheme] = useState(() => window.localStorage.getItem('sakhi-theme') || 'dark')
+  const [theme, setTheme] = useState(() => window.localStorage.getItem('boon-ss-theme') || 'dark')
   const [question, setQuestion] = useState('')
   const [conversation, setConversation] = useState([])
   const [pendingQuestion, setPendingQuestion] = useState('')
@@ -33,7 +33,7 @@ export default function App() {
   const conversationEndRef = useRef(null)
 
   useEffect(() => {
-    window.localStorage.setItem('sakhi-theme', theme)
+    window.localStorage.setItem('boon-ss-theme', theme)
   }, [theme])
 
   useEffect(() => {
@@ -83,9 +83,9 @@ export default function App() {
       <div className="ambient ambient-two" />
 
       <nav className="topbar flex min-h-[88px] items-center justify-between">
-        <a className="brand" href="#" aria-label="SAKHI home">
+        <a className="brand" href="#" aria-label="BOON.SS home">
           <span className="brand-mark"><Sparkles size={17} /></span>
-          <span>SAKHI</span>
+          <span>BOON.SS</span>
         </a>
         <div className="topbar-note"><span className="live-dot" /> Your little spark of genius</div>
         <div className="topbar-actions flex items-center gap-2">
@@ -134,7 +134,7 @@ export default function App() {
         </div>
       </section>
 
-      <section className="workspace" aria-label="Ask SAKHI">
+      <section className="workspace" aria-label="Ask BOON.SS">
         <div className="workspace-heading mb-[18px] flex items-end justify-between">
           <div>
             <div className="section-kicker">LET&apos;S MAKE SOMETHING CLICK</div>
@@ -144,7 +144,7 @@ export default function App() {
         </div>
 
         {conversation.length > 0 && (
-          <section className="conversation" aria-label="Conversation with SAKHI" aria-live="polite">
+          <section className="conversation" aria-label="Conversation with BOON.SS" aria-live="polite">
             <div className="conversation-heading">
               <div className="answer-label"><span className="answer-icon"><MessageCircle size={14} /></span> YOUR CONVERSATION</div>
               <button className="reset-button" type="button" onClick={startNewConversation} disabled={isLoading}>
@@ -173,21 +173,21 @@ export default function App() {
               )}
               <div ref={conversationEndRef} />
             </div>
-            <div className="answer-bottom"><Check size={13} /> SAKHI is keeping the context of this conversation</div>
+            <div className="answer-bottom"><Check size={13} /> BOON.SS is keeping the context of this conversation</div>
           </section>
         )}
 
         {pendingQuestion && conversation.length === 0 && (
           <section className="answer-card" aria-live="polite">
             <div className="answer-topline">
-              <div className="answer-label"><span className="answer-icon"><Sparkles size={15} /></span> SAKHI IS THINKING</div>
+              <div className="answer-label"><span className="answer-icon"><Sparkles size={15} /></span> BOON.SS IS THINKING</div>
             </div>
             <div className="loading-state"><span className="loading-orb"><Sparkles size={19} /></span><span>Putting a little thought into this...</span></div>
           </section>
         )}
 
         <form className="prompt-form" onSubmit={handleSubmit}>
-          <label className="sr-only" htmlFor="prompt">Ask SAKHI anything</label>
+          <label className="sr-only" htmlFor="prompt">Ask BOON.SS anything</label>
           <textarea
             id="prompt"
             value={question}
@@ -205,7 +205,7 @@ export default function App() {
             <span className="input-hint"><span>↵</span> to send <span className="hint-divider">·</span> shift + ↵ for a new line</span>
             <button className="send-button" type="submit" disabled={isLoading || !question.trim()}>
               {isLoading ? <LoaderCircle className="spin" size={17} /> : <Send size={16} />}
-              <span>{isLoading ? 'Thinking...' : 'Ask SAKHI'}</span>
+              <span>{isLoading ? 'Thinking...' : 'Ask BOON.SS'}</span>
               {!isLoading && <ArrowUpRight size={15} />}
             </button>
           </div>

@@ -1,9 +1,14 @@
 import { GoogleGenAI } from "@google/genai";
 
-const ai = new GoogleGenAI({apiKey:"AQ.Ab8RN6JhAaP13aDBs8dfEoHPVBPclX-qW_ZiWYiknG7dKEmFqA"});
+const apiKey = import.meta.env.VITE_GEMINI_API_KEY;
 
 export default async function askAi(question, conversation = [])
 {
+    if (!apiKey) {
+        throw new Error("Missing VITE_GEMINI_API_KEY. Add it to .env.local and restart the dev server.");
+    }
+
+    const ai = new GoogleGenAI({ apiKey });
     const interaction = await ai.interactions.create({
         model: "gemini-3.5-flash-lite",
         input: `You are SAKHI, a friendly conversational AI. Answer the user's latest message using the conversation history when it is relevant.

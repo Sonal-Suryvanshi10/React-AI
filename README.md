@@ -2,6 +2,17 @@
 
 This template provides a minimal setup to get React working in Vite with HMR and some Oxlint rules.
 
+## Gemini API key
+
+1. Open `.env` in the project root.
+2. Replace `your_gemini_api_key_here` with your Gemini API key.
+3. Restart the Vite development server.
+
+`.env.local` is ignored by Git. Vite variables prefixed with `VITE_` are included in
+the browser bundle, so this setup prevents accidental commits but does not keep the
+key secret from people using the website. Use a backend proxy to protect the key in
+a public deployment.
+
 Currently, two official plugins are available:
 
 - [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Oxc](https://oxc.rs)
